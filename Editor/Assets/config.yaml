@@ -54,3 +54,6 @@ FileTypes:
   - Title: ClassGen File
     Editor: ClassGenEditor
     Extensions: .cg
+  - Title: Project File
+    Editor: ProjectEditor
+    Extensions: .project

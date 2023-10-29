@@ -1,0 +1,4 @@
+Type: Asset
+BaseType: System.ConfigFile<Map<String, ProjectEditablePackage>>
+Values:
+  Path: "{}/.conan/editable_packages.json"

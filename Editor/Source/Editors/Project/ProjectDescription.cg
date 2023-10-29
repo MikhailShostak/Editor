@@ -1,0 +1,18 @@
+Type: Class
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Dependencies
+    Type: Array<String>
+  - Attributes:
+      - Serialize
+    Name: Targets
+    Type: Array<ProjectTargetDescription>
+  - Attributes:
+      - Serialize
+    Name: MultitargetConfigurations
+    Type: Array<ProjectMultitargetDescription>
+  - Attributes:
+      - Serialize
+    Name: TargetPackageNames
+    Type: Map<String, String>

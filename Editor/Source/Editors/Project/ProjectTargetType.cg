@@ -1,0 +1,6 @@
+Type: Enumeration
+Values:
+  - Application
+  - SharedLibrary
+  - StaticLibrary
+  - Interface

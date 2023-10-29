@@ -10,6 +10,11 @@ inline Array<String> g_ActiveToolBarItems = {
     "File.OpenFile",
     "File.OpenFolder",
     "File.Save",
+    "Project.Selector",
+    "Project.EditPackage",
+    "Project.Clear",
+    "Project.Build",
+    "Project.Run",
 };
 
 std::string GetFileTitle(const std::filesystem::path &path, bool showExtensionOnly = false);

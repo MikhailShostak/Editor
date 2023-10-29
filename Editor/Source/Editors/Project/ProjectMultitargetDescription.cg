@@ -1,0 +1,14 @@
+Type: Class
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Name
+    Type: System.Path
+  - Attributes:
+      - Serialize
+    Name: Targets
+    Type: Array<System.Path>
+  - Attributes:
+      - Serialize
+    Name: Executions
+    Type: Array<ProjectExecutionDescription>

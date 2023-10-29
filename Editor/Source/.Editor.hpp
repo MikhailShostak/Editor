@@ -11,6 +11,16 @@
 #include "Data/EditorConfig.hpp"
 #include "Data/EditorConfigData.hpp"
 
+#include "Editors/Project/EditablePackages/ProjectEditablePackage.hpp"
+#include "Editors/Project/EditablePackages/ProjectEditablePackageConfig.hpp"
+#include "Editors/Project/ProjectTargetType.hpp"
+#include "Editors/Project/ProjectExecutionDescription.hpp"
+#include "Editors/Project/ProjectMultitargetDescription.hpp"
+#include "Editors/Project/ProjectActionDescription.hpp"
+#include "Editors/Project/ProjectTargetDescription.hpp"
+#include "Editors/Project/ProjectDescription.hpp"
+#include "Editors/Project/ProjectEditor.hpp"
+
 #include "Components/EditorWindow.hpp"
 
 #include ".EditorReflection.hpp"

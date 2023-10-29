@@ -1,0 +1,10 @@
+Type: Class
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Application
+    Type: System.Path
+  - Attributes:
+      - Serialize
+    Name: Arguments
+    Type: Array<String>
