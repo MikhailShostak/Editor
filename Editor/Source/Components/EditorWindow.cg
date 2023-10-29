@@ -1,0 +1,32 @@
+Type: Class
+BaseType: Graphics.RenderingSubsystem
+Functions:
+  - Name: Load
+  - Name: Unload
+  - Name: CreateUI
+  - Name: RenderScene
+    InputParameters:
+      - Name: Window
+        Type: Graphics.Window
+        Writable: true
+      - Name: Scene
+        Type: Graphics.Scene
+        Writable: true
+Graphs:
+  Function.Load:
+    Nodes:
+      - ID: Input
+        Name: Input
+      - ID: Output
+        Name: Output
+  Function.Unload:
+    Nodes:
+      - ID: Input
+        Name: Input
+      - ID: Output
+        Name: Output
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Config
+    Type: SharedReference<System.ConfigFile<EditorConfig>>

@@ -1,0 +1,20 @@
+- Type: Input.Subsystem
+- Type: Graphics.SFMLRHISubsystem
+- Type: Graphics.SFMLSubsystem
+- Type: UI2.Subsystem
+- Type: AppFlow.AppFlowSubsystem
+  Values:
+    Windows:
+      MainWindow:
+        Scene:
+          Type: MainWindowScene
+        Title: Editor
+        Size:
+          X: 1920
+          Y: 1080
+    StartupWindows:
+      - MainWindow
+- Type: EditorWindow
+  Values:
+    Config:
+      Type: EditorConfigData

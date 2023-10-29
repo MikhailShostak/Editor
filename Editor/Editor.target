@@ -1,0 +1,13 @@
+Type: Application
+PrecompileLocalHeaders: true
+PrivateIncludes:
+  - AppFlow.hpp
+  - GraphicsSFML.hpp
+  - ClassGenLibrary.hpp
+  - imgui.h
+  - misc/cpp/imgui_stdlib.h
+PrivateDependencies:
+  - Name: AppFlow
+  - Name: GraphicsSFML
+  - Name: ClassGenLibrary
+  - Name: imgui/1.89.8-docking
