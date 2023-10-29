@@ -1,5 +1,7 @@
 #include "Extensions.hpp"
 
+#include ".Editor.hpp"
+
 std::string GetExtensionID(const std::string &author, const std::string &title)
 {
     return author + "." + title;

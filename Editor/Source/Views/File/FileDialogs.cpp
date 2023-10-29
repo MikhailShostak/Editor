@@ -1,6 +1,7 @@
-#include "../Views.hpp"
+#include "Views/Views.hpp"
 
-#include "../../Data/Workspace.hpp"
+#include ".Editor.hpp"
+#include "Data/Workspace.hpp"
 
 namespace File
 {

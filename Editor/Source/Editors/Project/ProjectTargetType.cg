@@ -1,6 +1,7 @@
 Type: Enumeration
 Values:
   - Application
+  - Library
   - SharedLibrary
   - StaticLibrary
   - Interface

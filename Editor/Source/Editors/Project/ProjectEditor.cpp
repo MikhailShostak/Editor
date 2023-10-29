@@ -1,52 +1,23 @@
+#include "Editors/Project/ProjectEditor.hpp"
+
+#include ".Editor.hpp"
+#include "Editors/Project/ProjectTargetType.hpp"
+#include "Editors/Project/ProjectTargetDescription.hpp"
+#include "Editors/Project/ProjectMultitargetDescription.hpp"
+#include "Editors/Project/ProjectDescription.hpp"
 #include "Data/Workspace.hpp"
 
 namespace System
 {
 
-inline bool IsNewer(const System::Path &Source, const System::Path &Target)
-{
-    return System::GetLastWriteTime(Source) > System::GetLastWriteTime(Target);
-}
-
-inline bool IsOlder(const System::Path &Source, const System::Path &Target)
-{
-    return System::GetLastWriteTime(Source) < System::GetLastWriteTime(Target);
-}
-
-inline bool IsOutdated(const System::Path &Path, const System::Path &Dependency)
-{
-    if (!IsExists(Path))
-    {
-        return true;
-    }
-
-    return IsOlder(Path, Dependency);
-}
-
-inline bool IsOutdated(const System::Path &Path, const Array<System::Path> &Dependencies)
-{
-    if (!IsExists(Path))
-    {
-        return true;
-    }
-
-    for (const auto &Dependency : Dependencies)
-    {
-        if (IsOlder(Path, Dependency))
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-Path GetHomeDirectory()
+inline Path GetHomeDirectory()
 {
     return getenv("USERPROFILE");//getenv("HOME");
 }
 
 }
+
+System::CommandLineTool BuildTools { g_BuildToolsFolder / "Tools" };
 
 namespace DefaultExtensions
 {
@@ -65,7 +36,7 @@ inline Array<String> Architectures = {
     "x86_64",
     "x86",
 };
-inline Array<decltype(System::Run())> ActiveProcesses;
+inline Array<System::Subprocess> ActiveProcesses;
 
 ProjectDescription *FindCurrentProject(const String &name = currentProject)
 {
@@ -991,12 +962,47 @@ ProjectEditor::ProjectEditor()
                 return;
             }
 
-            Build();
+            //Build();
+            BuildTools.Run(
+                "Build",
+                "--Generator=Ninja",
+                "--Linkage=Shared",
+                fmt::format("--Project={}", currentProjectPath.parent_path().generic_string()),
+                fmt::format("--Target={}", currentTarget),
+                fmt::format("--Configuration={}", currentConfiguration)
+            ).wait();
         }
         if (ImGui::IsItemHovered())
         {
             ImGui::BeginTooltip();
             ImGui::Text("Build Project Target");
+            ImGui::EndTooltip();
+        }
+    };
+    g_ToolBarItems["Project.Install"] = []() {
+        if (ImGui::Button(ICON_MD_INSTALL_DESKTOP))
+        {
+            Stop();
+
+            if (currentTarget.empty())
+            {
+                fmt::print("Target is not selected. Please select a target.\n");
+                return;
+            }
+
+            BuildTools.Run(
+                "Package",
+                "--Generator=Ninja",
+                "--Linkage=Shared",
+                fmt::format("--Project={}", currentProjectPath.parent_path().generic_string()),
+                fmt::format("--Target={}", currentTarget),
+                fmt::format("--Configuration={}", currentConfiguration)
+            ).wait();
+        }
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::Text("Install Project Target");
             ImGui::EndTooltip();
         }
     };
@@ -1029,14 +1035,56 @@ ProjectEditor::ProjectEditor()
     };
 }
 
+auto &FindOrAddProject(const System::Path &Path)
+{
+    auto [Project, New] = MapUtils::FindOrAdd(g_Projects, Path.generic_string());
+    if (New)
+    {
+        Serialization::FromFile(Path, Project);
+    }
+    return Project;
+}
+
+std::optional<System::Path> FindProjectFile(const System::Path& TargetPath)
+{
+    System::Path currentPath = TargetPath;
+
+    while (true)
+    {
+        System::Path ProjectPath = currentPath / (currentPath.filename().generic_string() + ".project");
+        if (std::filesystem::exists(ProjectPath) && std::filesystem::is_regular_file(ProjectPath))
+        {
+            return ProjectPath;
+        }
+
+        if (currentPath.has_parent_path())
+        {
+            currentPath = currentPath.parent_path();
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return std::nullopt;
+}
+
 void ProjectEditor::IndexFile(const System::Path &Path)
 {
-    if (Path.extension() != ".project")
+    if (Path.extension() != ".target")
     {
         return;
     }
 
-    Serialization::FromFile<ProjectDescription>(Path, g_Projects[Path.generic_string()]);
+    auto ProjectPath = FindProjectFile(Path.parent_path());
+    auto &Project = FindOrAddProject(*ProjectPath);
+
+    ProjectTargetDescription Target;
+    Serialization::FromFile(Path, Target);
+    Target.Name = Path.stem().generic_string();
+    ArrayUtils::Add(Project.Targets, std::move(Target));
+    //Serialization::FromFile<ProjectDescription>(Path, g_Projects[Path.generic_string()]);
 }
 
 void ProjectEditor::RenderFile(const System::Path &Path)

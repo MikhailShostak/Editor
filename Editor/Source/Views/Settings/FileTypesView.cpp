@@ -1,6 +1,8 @@
-#include "../Views.hpp"
+#include "Views/Views.hpp"
+#include "Editors/Editor.hpp"
+#include ".Editor.hpp"
 
-#include "../../Editors/Editor.hpp"
+#include "Data/Configs/FileType.hpp"
 
 namespace Settings
 {

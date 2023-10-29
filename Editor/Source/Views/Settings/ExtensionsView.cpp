@@ -1,6 +1,9 @@
-#include "../Views.hpp"
+#include "Views/Views.hpp"
 
-#include "../../Data/Extensions.hpp"
+#include ".Editor.hpp"
+#include "Data/Extensions.hpp"
+#include <EditorAPI.hpp>
+#include "Subsystems/EditorExtensionSubsystem.hpp"
 
 namespace Settings
 {
@@ -36,6 +39,8 @@ void ShowExtension(const std::filesystem::path &path, Extension &extension)
 
 void ShowExtensions()
 {
+    Core::FindSubsystem<EditorExtensionSubsystem>()->ShowExtensions();
+
     ImGui::InputText("SearchDirectory", &g_Config->Data.Extensions.SearchDirectory);
     ImGui::SameLine();
     if (ImGui::Button("Reload"))

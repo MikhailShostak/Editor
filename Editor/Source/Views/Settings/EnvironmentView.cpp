@@ -1,4 +1,4 @@
-#include "../Views.hpp"
+#include "Views/Views.hpp"
 
 namespace Settings
 {
@@ -25,7 +25,7 @@ void ShowEnvironment()
             std::vector<std::string> strings = e.to_vector();
             for(const auto &s : strings)
             {
-                ImGui::TextWrapped(s.data());
+                ImGui::TextWrapped("%s", s.data());
             }
 
         }

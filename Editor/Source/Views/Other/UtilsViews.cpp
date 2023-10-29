@@ -1,4 +1,6 @@
-#include "../Views.hpp"
+#include "Views/Views.hpp"
+
+#include ".Editor.hpp"
 
 std::filesystem::path RetrieveDirectory(const std::filesystem::path &path) { return std::filesystem::is_directory(path) ? path : path.parent_path(); }
 

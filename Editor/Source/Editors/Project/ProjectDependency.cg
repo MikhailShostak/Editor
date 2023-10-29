@@ -1,0 +1,6 @@
+Type: Class
+Properties:
+  - Attributes:
+      - Serialize
+    Name: Name
+    Type: System.Path

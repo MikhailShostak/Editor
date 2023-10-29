@@ -4,9 +4,7 @@ Properties:
       - Serialize
     Name: Dependencies
     Type: Array<String>
-  - Attributes:
-      - Serialize
-    Name: Targets
+  - Name: Targets
     Type: Array<ProjectTargetDescription>
   - Attributes:
       - Serialize

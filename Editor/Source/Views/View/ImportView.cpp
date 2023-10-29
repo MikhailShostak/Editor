@@ -1,4 +1,4 @@
-#include "../Views.hpp"
+#include "Views/Views.hpp"
 
 //#include <assimp/Importer.hpp>
 //#include <assimp/scene.h>

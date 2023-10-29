@@ -1,0 +1,27 @@
+Type: Class
+BaseType: Core.Subsystem
+Interfaces:
+  - EditorAPI.EditorContext
+Properties:
+  - Name: Extensions
+    Type: System.ExtensionLibrary<EditorAPI.EditorExtension>
+  - Name: FileEditors
+    Type: Map<String, ClassReference<EditorAPI.EditorFileEditor>>
+  - Name: Settings
+    Type: Map<String, ClassReference<EditorAPI.EditorSettings>>
+Functions:
+  - Name: Load
+  - Name: Unload
+  - Name: ShowExtensions
+  - Name: RegisterFileEditor
+    InputParameters:
+      - Name: Title
+        Type: String
+      - Name: Editor
+        Type: ClassReference<EditorAPI.EditorFileEditor>
+  - Name: RegisterSettings
+    InputParameters:
+      - Name: Title
+        Type: String
+      - Name: Settings
+        Type: ClassReference<EditorAPI.EditorSettings>

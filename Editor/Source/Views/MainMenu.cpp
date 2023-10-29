@@ -1,6 +1,8 @@
 #include "Views.hpp"
 
-#include "../Data/Workspace.hpp"
+#include "Data/Workspace.hpp"
+
+#include ".Editor.hpp"
 
 std::filesystem::path PathToOpen;
 void ShowPathList(const std::vector<std::filesystem::path> &list) {

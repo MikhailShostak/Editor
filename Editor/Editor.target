@@ -1,13 +1,17 @@
 Type: Application
-PrecompileLocalHeaders: true
 PrivateIncludes:
+  - imgui.h
+  - misc/cpp/imgui_stdlib.h
+  - IconsMaterialDesign.h
   - AppFlow.hpp
   - GraphicsSFML.hpp
   - ClassGenLibrary.hpp
-  - imgui.h
-  - misc/cpp/imgui_stdlib.h
+  - Experimental.hpp
 PrivateDependencies:
+  - Name: imgui/1.89.8-docking
+  - Name: iconfontcppheaders/cci.20231102
+  - Name: EditorAPI
   - Name: AppFlow
   - Name: GraphicsSFML
   - Name: ClassGenLibrary
-  - Name: imgui/1.89.8-docking
+  - Name: experimental

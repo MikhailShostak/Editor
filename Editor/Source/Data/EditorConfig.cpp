@@ -1,3 +1,5 @@
+#include ".Editor.hpp"
+#include "Data/EditorConfig.hpp"
 
 Array<std::pair<String, String>>/*Filters*/ EditorConfig::CreateFilters()
 {

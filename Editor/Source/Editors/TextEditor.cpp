@@ -2,7 +2,7 @@
 
 //TODO: fix texteditor
 //#include <TextEditor.h>
-#include "../Data/Workspace.hpp"
+#include "Data/Workspace.hpp"
 
 namespace DefaultExtensions
 {

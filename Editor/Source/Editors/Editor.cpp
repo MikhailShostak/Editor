@@ -1,6 +1,6 @@
 #include "Editor.hpp"
 
-#include "../Data/Workspace.hpp"
+#include "Data/Workspace.hpp"
 
 void Editor::MarkFileDirty(const std::filesystem::path &path)
 {

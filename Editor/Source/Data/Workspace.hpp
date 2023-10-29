@@ -15,6 +15,7 @@ inline Array<String> g_ActiveToolBarItems = {
     "Project.Clear",
     "Project.Build",
     "Project.Run",
+    "Project.Install",
 };
 
 std::string GetFileTitle(const std::filesystem::path &path, bool showExtensionOnly = false);

@@ -1,6 +1,7 @@
 #include "Workspace.hpp"
 
-#include "../Editors/Editor.hpp"
+#include ".Editor.hpp"
+#include "Editors/Editor.hpp"
 
 std::string GetFileTitle(const std::filesystem::path &path, bool showExtensionOnly)
 {

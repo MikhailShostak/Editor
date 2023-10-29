@@ -1,7 +1,14 @@
+- Type: Core.AssetManagerSubsystem
+  Values:
+    Folders:
+      - Data
 - Type: Input.Subsystem
 - Type: Graphics.SFMLRHISubsystem
 - Type: Graphics.SFMLSubsystem
 - Type: UI2.Subsystem
+  Values:
+    RootView:
+      Type: MainWindowView
 - Type: AppFlow.AppFlowSubsystem
   Values:
     Windows:
@@ -14,7 +21,8 @@
           Y: 1080
     StartupWindows:
       - MainWindow
-- Type: EditorWindow
+- Type: EditorExtensionSubsystem
+- Type: EditorSubsystem
   Values:
     Config:
       Type: EditorConfigData

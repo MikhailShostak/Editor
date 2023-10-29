@@ -1,4 +1,5 @@
-#include "../Views.hpp"
+#include "Views/Views.hpp"
+#include ".Editor.hpp"
 
 namespace Settings
 {

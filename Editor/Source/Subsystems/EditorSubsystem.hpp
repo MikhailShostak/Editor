@@ -1,13 +1,13 @@
 #pragma once
 
-struct PUBLIC_API_EXPORT EditorWindow
+struct PUBLIC_API_EXPORT EditorSubsystem
     : public Graphics::RenderingSubsystem
 {
-    using This = EditorWindow;
+    using This = EditorSubsystem;
     using Super = Graphics::RenderingSubsystem;
     SharedReference<System::ConfigFile<EditorConfig>> Config {};
 
-    virtual ~EditorWindow() {}
+    virtual ~EditorSubsystem() {}
     template<typename T>
     void Serialize(T &&data)
     {

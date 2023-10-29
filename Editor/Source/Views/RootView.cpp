@@ -1,6 +1,8 @@
 #include "Views.hpp"
 
-#include "../Data/Workspace.hpp"
+#include ".Editor.hpp"
+
+#include "Data/Workspace.hpp"
 
 inline auto RootWindowFlags =
     //ImGuiWindowFlags_NoFocusOnAppearing |

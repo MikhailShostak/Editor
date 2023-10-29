@@ -1,5 +1,5 @@
-#include "../Views.hpp"
-#include "../../Data/Workspace.hpp"
+#include "Views/Views.hpp"
+#include "Data/Workspace.hpp"
 
 namespace Debug
 {

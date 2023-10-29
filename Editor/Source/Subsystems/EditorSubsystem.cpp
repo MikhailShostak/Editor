@@ -1,9 +1,13 @@
+#include ".Editor.hpp"
+#include "Subsystems/EditorSubsystem.hpp"
+
 #include "Data/Extensions.hpp"
 #include "Data/Workspace.hpp"
 #include "Editors/BinaryEditor.hpp"
 #include "Editors/ClassGenEditor.hpp"
 #include "Editors/TextEditor.hpp"
 #include "Views/Views.hpp"
+
 
 #include <Class.gen.hpp>
 
@@ -148,19 +152,29 @@ void ApplyStyle()
     style.DisplaySafeAreaPadding = { 3, 3 };
 }
 
-void EditorWindow::CreateUI()
+void EditorSubsystem::CreateUI()
 {
+    //Super::CreateUI();
     LoadIcons();
     ApplyStyle();
 }
 
-void EditorWindow::Load()
+System::CommandLineTool Conan { g_BuildToolsFolder / "Run", { "conan" } };
+
+void EditorSubsystem::Load()
 {
     Super::Load();
 
     UISubsystem = Core::FindSubsystem<UI2::Subsystem>();
 
     g_Config = Config;
+
+    //System::CommandLineTool git(g_UserFolder / "Git/bin/git");
+    //if (!System::IsExists(g_BuildToolsFolder))
+    //{
+    //    git.Run("clone", "--branch", "dev", "https://github.com/MikhailShostak/BuildTools.git", g_BuildToolsFolder.generic_string()).wait();
+    //    System::CommandLineTool(g_BuildToolsFolder / "Setup").Run();
+    //}
 
     if (Config->Load())
     {
@@ -241,14 +255,14 @@ void EditorWindow::Load()
     ReloadFiles();
 }
 
-void EditorWindow::Unload()
+void EditorSubsystem::Unload()
 {
     Config->Save();
 
     Super::Unload();
 }
 
-void EditorWindow::RenderScene(Graphics::Window & Window, Graphics::Scene & Scene)
+void EditorSubsystem::RenderScene(Graphics::Window & Window, Graphics::Scene & Scene)
 {
     static bool initialized = false;
     if (!initialized)
@@ -256,6 +270,15 @@ void EditorWindow::RenderScene(Graphics::Window & Window, Graphics::Scene & Scen
         initialized = true;
         CreateUI();
     }
+    
+    /*for (auto &[id, request] : g_DrawRequests)
+    {
+        request(GraphicsContext);
+    }
+
+
+    g_GraphicsContext = &GraphicsContext;
+    g_SceneWindow = this;*/
 
     UISubsystem->PushUIFont();
     ShowRootView(&OnToolBarUpdate, &OnContentUpdate);
@@ -272,4 +295,5 @@ void EditorWindow::RenderScene(Graphics::Window & Window, Graphics::Scene & Scen
     }
     Debug::ShowDebugWindow();
     UISubsystem->PopFont();
+    //g_GraphicsContext = nullptr;
 }
