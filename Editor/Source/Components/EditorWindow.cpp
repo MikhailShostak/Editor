@@ -9,6 +9,19 @@
 
 SharedReference<UI2::Subsystem> UISubsystem;
 
+void OnToolBarUpdate()
+{
+    for (const auto &item : g_ActiveToolBarItems)
+    {
+        auto it = g_ToolBarItems.find(item);
+        if (it != g_ToolBarItems.end())
+        {
+            ImGui::SameLine();
+            it->second();
+        }
+    }
+}
+
 void OnContentUpdate()
 {
     ImGuiID Workspace = ImGui::GetID("Workspace");
@@ -158,6 +171,59 @@ void EditorWindow::Load()
         }
     }
 
+    g_ToolBarItems["File.New"] = []() {
+        static const char* ICON_ADD_NEW = "\xee\xa2\x9c";
+        if (ImGui::Button(ICON_ADD_NEW))
+        {
+            File::DisplayNewDialog = true;
+        }
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::Text("New File");
+            ImGui::EndTooltip();
+        }
+    };
+
+    g_ToolBarItems["File.OpenFile"] = []() {
+        if (ImGui::Button(ICON_MD_DESCRIPTION))
+        {
+            File::DisplayOpenFileDialog = true;
+        }
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::Text("Open File");
+            ImGui::EndTooltip();
+        }
+    };
+
+    g_ToolBarItems["File.OpenFolder"] = []() {
+        if (ImGui::Button(ICON_MD_FOLDER))
+        {
+            File::DisplayOpenFolderDialog = true;
+        }
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::Text("Open Folder");
+            ImGui::EndTooltip();
+        }
+    };
+
+    g_ToolBarItems["File.Save"] = []() {
+        if (ImGui::Button(ICON_MD_SAVE))
+        {
+            File::DisplaySaveAsDialog = true;
+        }
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::Text("Save File As");
+            ImGui::EndTooltip();
+        }
+    };
+
     Editors.insert({ "BinaryEditor", std::make_unique<DefaultExtensions::BinaryEditor>() });
     Editors.insert({ "TextEditor", std::make_unique<DefaultExtensions::TextEditor>() });
     Editors.insert({ "ClassGenEditor", std::make_unique<DefaultExtensions::ClassGenEditor>() });
@@ -191,7 +257,7 @@ void EditorWindow::RenderScene(Graphics::Window & Window, Graphics::Scene & Scen
     }
 
     UISubsystem->PushUIFont();
-    ShowRootView(&OnContentUpdate);
+    ShowRootView(&OnToolBarUpdate, &OnContentUpdate);
 
     File::ProcessDialogs();
 

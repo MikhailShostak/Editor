@@ -4,6 +4,14 @@ inline std::unordered_map<std::string, std::string> FileCache; //path, data
 inline std::unordered_map<std::string, class Editor*> UnsavedFiles; //path, editor
 inline bool PendingReindex = false;
 
+inline Map<String, std::function<void()>> g_ToolBarItems;
+inline Array<String> g_ActiveToolBarItems = {
+    "File.New",
+    "File.OpenFile",
+    "File.OpenFolder",
+    "File.Save",
+};
+
 std::string GetFileTitle(const std::filesystem::path &path, bool showExtensionOnly = false);
 
 bool LoadFile(const std::filesystem::path &path);

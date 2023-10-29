@@ -14,7 +14,7 @@ inline auto RootWindowFlags =
     ImGuiWindowFlags_NoBringToFrontOnFocus |
     ImGuiWindowFlags_NoNavFocus;
 
-void ShowRootView(const std::function<void()> &callback)
+void ShowRootView(const std::function<void()> &ToolBar, const std::function<void()> &Content)
 {
     const ImGuiViewport* viewport = ImGui::GetMainViewport();
     ImGui::SetNextWindowPos(viewport->WorkPos);
@@ -26,6 +26,7 @@ void ShowRootView(const std::function<void()> &callback)
     if(ImGui::Begin("Root", nullptr, RootWindowFlags))
     {
         ImGui::PopStyleVar(2);
+        ToolBar();
         ImGuiID Workspace = ImGui::GetID("Workspace");
         ImGui::DockSpace(Workspace/*, {}, ImGuiDockNodeFlags_AutoHideTabBar*/);
         ShowMainMenu();
@@ -34,7 +35,7 @@ void ShowRootView(const std::function<void()> &callback)
             ImGui::SetNextWindowDockID(Workspace);
             ShowWelcomePage();
         }
-        callback();
+        Content();
     }
     ImGui::End();
 }

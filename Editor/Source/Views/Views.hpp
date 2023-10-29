@@ -1,6 +1,6 @@
 #pragma once
 
-void ShowRootView(const std::function<void()> &callback);
+void ShowRootView(const std::function<void()>& ToolBar, const std::function<void()>& Content);
 void ShowMainMenu();
 void ShowWelcomePage();
 
