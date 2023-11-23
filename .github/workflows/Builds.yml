@@ -2,9 +2,7 @@ name: Builds
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
   workflow_dispatch:
 
 jobs:
@@ -70,3 +68,21 @@ jobs:
         USER: ${{ secrets.ARTIFACTORY_USER }}
         PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
       run: ${{ matrix.run_command }} conan remote login --password "%PASSWORD%" Artifactory "%USER%"
+
+    - name: Package EditorAPI
+      run: ${{ matrix.tools_command }} Package --Target=EditorAPI --Configuration=${{ matrix.configuration }} --Linkage=${{ matrix.linkage }} --Generator=Ninja --Deploy=Artifactory
+
+    - name: Package Editor
+      run: ${{ matrix.tools_command }} Package --Target=Editor --Configuration=${{ matrix.configuration }} --Linkage=${{ matrix.linkage }} --Generator=Ninja --Deploy=Artifactory
+
+    - name: Package Editor.BinaryEditor
+      run: ${{ matrix.tools_command }} Package --Target=Editor.BinaryEditor --Configuration=${{ matrix.configuration }} --Linkage=${{ matrix.linkage }} --Generator=Ninja --Deploy=Artifactory
+
+    - name: Package Editor.TextEditor
+      run: ${{ matrix.tools_command }} Package --Target=Editor.TextEditor --Configuration=${{ matrix.configuration }} --Linkage=${{ matrix.linkage }} --Generator=Ninja --Deploy=Artifactory
+
+    - name: Package Editor.ImageGenerator
+      run: ${{ matrix.tools_command }} Package --Target=Editor.ImageGenerator --Configuration=${{ matrix.configuration }} --Linkage=${{ matrix.linkage }} --Generator=Ninja --Deploy=Artifactory
+
+    - name: Deploy Dependencies
+      run: ${{ matrix.run_command }} conan upload -r Artifactory * -c
