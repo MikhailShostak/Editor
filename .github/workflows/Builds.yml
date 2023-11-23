@@ -1,0 +1,72 @@
+name: Builds
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
+      fail-fast: false
+
+      matrix:
+        os: [windows-latest]
+        configuration: [Release, Debug]
+        linkage: [Static, Shared]
+        include:
+          - os: windows-latest
+            setup_command: ../BuildTools/Setup.bat
+            run_command: ../BuildTools/Run.bat
+            tools_command: ../BuildTools/Tools.bat
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up MSVC 2022
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+        toolset: 14.3
+    
+    - name: Clone Build Tools
+      run: git clone --branch dev https://github.com/MikhailShostak/BuildTools.git ../BuildTools
+    - if: matrix.os != 'windows-latest'
+      name: Make Script Executable (Unix)
+      run: chmod +x ../BuildTools/*.sh
+
+    - name: Cache Python Packages
+      id: python-packages
+      uses: actions/cache@v3
+      with:
+        path: ../BuildTools/.venv
+        key: ${{ matrix.os }}-python-packages-${{ hashFiles('BuildTools/requirements.txt') }}
+    - if: ${{ steps.python-packages.outputs.cache-hit != 'true' }}
+      name: Setup Environment
+      run: ${{ matrix.setup_command }}
+
+    - name: Cache Conan Packages
+      id: conan-packages
+      uses: actions/cache@v3
+      with:
+        path: ../BuildTools/.conan
+        key: ${{ matrix.os }}-${{ matrix.cc }}-${{ matrix.configuration }}-conan-packages-${{ hashFiles('*.project') }}
+    - if: ${{ steps.conan-packages.outputs.cache-hit != 'true' }}
+      name: Setup Conan Profile
+      run: ${{ matrix.run_command }} conan profile detect
+    - name: Update Conan profile to use C++20
+      run: (Get-Content ../BuildTools/.conan/profiles/default) -replace 'compiler.cppstd=14', 'compiler.cppstd=20' | Set-Content ../BuildTools/.conan/profiles/default
+
+    - name: Add Artifactory
+      env:
+        URL: ${{ secrets.ARTIFACTORY_ADDRESS }}
+      run: ${{ matrix.run_command }} conan remote add Artifactory "%URL%"
+      
+    - name: Login Artifactory
+      env:
+        USER: ${{ secrets.ARTIFACTORY_USER }}
+        PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      run: ${{ matrix.run_command }} conan remote login --password "%PASSWORD%" Artifactory "%USER%"
