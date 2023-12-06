@@ -1,0 +1,5 @@
+Type: Library
+PublicIncludes:
+  - LegacyUI.hpp
+PublicDependencies:
+  - Name: LegacyUI/0.0.1@dev

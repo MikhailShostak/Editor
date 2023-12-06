@@ -1,0 +1,13 @@
+Targets:
+  - Name: OneStudioPlatform
+    Type: StaticLibrary
+    PackageVersion: 1.0.0
+    Dependencies:
+      - LegacyExperimental/1.0.0
+    Includes:
+      - LegacyExperimental
+  - Name: OneStudio
+    Type: Application
+    PackageVersion: 1.0.0
+    LocalDependencies:
+      - OneStudioPlatform

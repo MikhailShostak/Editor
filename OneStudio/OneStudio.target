@@ -1,0 +1,12 @@
+Type: Application
+PublicIncludes:
+  - LegacyUI.hpp
+  - LegacyConsole.hpp
+  - LegacyExperimental.hpp
+  - LegacyPlatform.hpp
+PublicDependencies:
+  - Name: LegacyUI/0.0.1@dev
+  - Name: LegacyConsole/0.0.1@dev
+  - Name: LegacyExperimental/0.0.1@dev
+  - Name: LegacyPlatform/0.0.1@dev
+  - Name: OneStudioPlatform/0.0.1@dev
