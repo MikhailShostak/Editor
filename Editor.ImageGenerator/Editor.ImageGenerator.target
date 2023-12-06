@@ -1,0 +1,6 @@
+Type: Library
+Namespace: Editor
+PublicIncludes:
+  - Utils.hpp
+PublicDependencies:
+  - Name: EditorAPI
