@@ -1,0 +1,15 @@
+Type: Class
+Namespace: EditorAPI
+Functions:
+  - Name: RegisterFileEditor
+    InputParameters:
+      - Name: Title
+        Type: String
+      - Name: Editor
+        Type: ClassReference<EditorAPI.EditorFileEditor>
+  - Name: RegisterSettings
+    InputParameters:
+      - Name: Title
+        Type: String
+      - Name: Settings
+        Type: ClassReference<EditorAPI.EditorSettings>

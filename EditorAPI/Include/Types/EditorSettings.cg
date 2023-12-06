@@ -1,0 +1,4 @@
+Type: Class
+Namespace: EditorAPI
+Functions:
+  - Name: OnDraw

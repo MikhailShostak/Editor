@@ -1,0 +1,10 @@
+Type: Class
+Namespace: EditorAPI
+Functions:
+  - Name: OnLoad
+    InputParameters:
+      - Name: Context
+        Type: EditorContext*
+        Copy: true
+        Writable: true
+  - Name: OnUnload

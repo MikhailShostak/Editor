@@ -1,0 +1,7 @@
+Type: Interface
+PublicIncludes:
+  - SystemExtensions.hpp
+  - Utils.hpp
+PublicDependencies:
+  - Name: systemextensions
+  - Name: utils
