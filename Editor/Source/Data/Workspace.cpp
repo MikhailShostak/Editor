@@ -21,10 +21,11 @@ bool LoadFile(const std::filesystem::path &path)
         return false;
     }
 
-    std::ifstream input(path, std::ios::binary);
-    std::string str((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
-    input.close();
-    FileCache[path.generic_string()] = std::move(str);
+    //TODO: optimize
+    //std::ifstream input(path, std::ios::binary);
+    //std::string str((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
+    //input.close();
+    //FileCache[path.generic_string()] = std::move(str);
 
     for(auto &editor : Editors)
     {
