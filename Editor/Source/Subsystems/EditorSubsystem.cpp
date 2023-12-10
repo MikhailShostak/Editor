@@ -240,7 +240,7 @@ void EditorSubsystem::Load()
 
     Editors.insert({ "BinaryEditor", std::make_unique<DefaultExtensions::BinaryEditor>() });
     Editors.insert({ "TextEditor", std::make_unique<DefaultExtensions::TextEditor>() });
-    Editors.insert({ "ClassGenEditor", std::make_unique<DefaultExtensions::ClassGenEditor>() });
+    //Editors.insert({ "ClassGenEditor", std::make_unique<DefaultExtensions::ClassGenEditor>() });
     Editors.insert({ "ProjectEditor", std::make_unique<DefaultExtensions::ProjectEditor>() });
 
     ClassGen::LoadExtensions();
