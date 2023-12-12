@@ -1,0 +1,10 @@
+Type: Class
+BaseType: EditorAPI.EditorExtension
+Functions:
+  - Name: OnLoad
+    InputParameters:
+      - Name: Context
+        Type: EditorAPI.EditorContext*
+        Copy: true
+        Writable: true
+  - Name: OnUnload

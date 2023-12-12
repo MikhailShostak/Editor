@@ -1,0 +1,10 @@
+Type: Library
+Namespace: Editor
+PublicIncludes:
+  - Core.hpp
+  - Experimental.hpp
+  - ClassGenLibrary.hpp
+PublicDependencies:
+  - Name: EditorAPI
+  - Name: Utils
+  - Name: ClassGenLibrary
