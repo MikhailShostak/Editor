@@ -1,0 +1,12 @@
+Type: Class
+Attributes:
+  - Structure
+Properties:
+  - Name: revised_prompt
+    Type: String
+    Attributes:
+      - Serialize
+  - Name: url
+    Type: String
+    Attributes:
+      - Serialize

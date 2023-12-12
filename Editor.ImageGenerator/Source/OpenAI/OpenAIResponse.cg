@@ -1,0 +1,12 @@
+Type: Class
+Attributes:
+  - Structure
+Properties:
+  - Name: created
+    Type: uint64_t
+    Attributes:
+      - Serialize
+  - Name: data
+    Type: Array<Serialization.Data>
+    Attributes:
+      - Serialize
