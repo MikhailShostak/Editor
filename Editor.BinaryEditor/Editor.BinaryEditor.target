@@ -1,6 +1,7 @@
 Type: Library
 Namespace: Editor
 PublicIncludes:
-  - Utils.hpp
+  - Core.hpp
+  - Experimental.hpp
 PublicDependencies:
   - Name: EditorAPI
