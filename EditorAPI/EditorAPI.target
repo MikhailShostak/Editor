@@ -1,7 +1,9 @@
 Type: Interface
 PublicIncludes:
   - SystemExtensions.hpp
-  - Utils.hpp
+  - Core.hpp
+  - Experimental.hpp
 PublicDependencies:
   - Name: systemextensions
-  - Name: utils
+  - Name: core
+  - Name: experimental

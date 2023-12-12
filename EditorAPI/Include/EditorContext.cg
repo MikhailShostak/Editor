@@ -1,15 +1,32 @@
 Type: Class
+BaseType: Core.Subsystem
 Namespace: EditorAPI
 Functions:
   - Name: RegisterFileEditor
+    Abstract: true
     InputParameters:
       - Name: Title
         Type: String
       - Name: Editor
-        Type: ClassReference<EditorAPI.EditorFileEditor>
+        Type: ClassReference<EditorAPI.Editor>
   - Name: RegisterSettings
+    Abstract: true
     InputParameters:
       - Name: Title
         Type: String
       - Name: Settings
         Type: ClassReference<EditorAPI.EditorSettings>
+  - Name: RegisterWindow
+    Abstract: true
+    InputParameters:
+      - Name: Title
+        Type: String
+      - Name: View
+        Type: ClassReference<UI2.View>
+  - Name: MarkFileDirty
+    Abstract: true
+    InputParameters:
+      - Name: Path
+        Type: System.Path
+      - Name: Editor
+        Type: EditorAPI.Editor
