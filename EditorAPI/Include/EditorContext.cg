@@ -15,7 +15,7 @@ Functions:
       - Name: Title
         Type: String
       - Name: Settings
-        Type: ClassReference<EditorAPI.EditorSettings>
+        Type: ClassReference<UI2.View>
   - Name: RegisterWindow
     Abstract: true
     InputParameters:

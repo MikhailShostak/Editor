@@ -14,7 +14,7 @@ struct PUBLIC_API_EXPORT EditorContext
     {
     }
     virtual void RegisterFileEditor(const String & Title, const ClassReference<EditorAPI::Editor> & Editor) = 0;
-    virtual void RegisterSettings(const String & Title, const ClassReference<EditorAPI::EditorSettings> & Settings) = 0;
+    virtual void RegisterSettings(const String & Title, const ClassReference<UI2::View> & Settings) = 0;
     virtual void RegisterWindow(const String & Title, const ClassReference<UI2::View> & View) = 0;
     virtual void MarkFileDirty(const System::Path & Path, const EditorAPI::Editor & Editor) = 0;
 
