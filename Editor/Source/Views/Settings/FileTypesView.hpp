@@ -7,10 +7,19 @@
 namespace Settings
 {
 
+class FileTypesView : public UI2::View
+{
+public:
+
+void OnDraw(Graphics::Scene &Scene) override
+{
+    ShowFileTypes();
+}
+
 void ShowFileTypes()
 {
     std::vector<const char *> EditorNames;
-    for(const auto &v : Editors)
+    for(const auto &v : g_RegisteredEditors)
     {
         EditorNames.push_back(v.first.data());
     }
@@ -59,5 +68,7 @@ void ShowFileTypes()
         g_Config->Data.FileTypes.push_back(fileType);
     }
 }
+
+};
 
 }

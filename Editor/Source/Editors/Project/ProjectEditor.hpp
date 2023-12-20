@@ -5,7 +5,7 @@
 namespace DefaultExtensions
 {
 
-class ProjectEditor : public Editor
+class ProjectEditor : public EditorAPI::Editor
 {
 public:
     ProjectEditor();

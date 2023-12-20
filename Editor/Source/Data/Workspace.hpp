@@ -1,7 +1,9 @@
 #pragma once
 
+#include <EditorAPI.hpp>
+
 inline std::unordered_map<std::string, std::string> FileCache; //path, data
-inline std::unordered_map<std::string, class Editor*> UnsavedFiles; //path, editor
+inline std::unordered_map<std::string, class EditorAPI::Editor*> UnsavedFiles; //path, editor
 inline bool PendingReindex = false;
 
 inline Map<String, std::function<void()>> g_ToolBarItems;

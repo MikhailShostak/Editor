@@ -1,17 +1,9 @@
 #include "Views/Views.hpp"
 
-std::vector<SettingsEntry> SettingsEntries = {
-    { "General", &Settings::ShowGeneralSettings },
-    { "FileBrowser", &Settings::ShowFileBrowserSettings },
-    { "Environment", &Settings::ShowEnvironment },
-    { "Extensions", &Settings::ShowExtensions },
-    { "File Types", &Settings::ShowFileTypes },
-};
-
 namespace Settings
 {
 
-void ShowSettings()
+void ShowSettings(Graphics::Scene &Scene)
 {
     if (DisplaySettings)
     {
@@ -27,9 +19,9 @@ void ShowSettings()
         static int ExtensionSettingsSelection = -1;
         {
             ImGui::BeginChild("Groups", ImVec2(200, 0), true);
-            for (int i = 0; i < SettingsEntries.size(); ++i)
+            for (int i = 0; i < g_SettingsEntries.size(); ++i)
             {
-                if (ImGui::Selectable(SettingsEntries[i].title.data(), StaticSettingsSelection == i))
+                if (ImGui::Selectable(g_SettingsEntries[i].title.data(), StaticSettingsSelection == i))
                 {
                     StaticSettingsSelection = i;
                     ExtensionSettingsSelection = -1;
@@ -54,11 +46,11 @@ void ShowSettings()
             ImGui::BeginChild("Content", ImVec2(0, 0), true);
             if (StaticSettingsSelection >= 0)
             {
-                SettingsEntries[StaticSettingsSelection].handle();
+                g_SettingsEntries[StaticSettingsSelection].view->Draw(Scene);
             }
             else if (ExtensionSettingsSelection >= 0)
             {
-                Settings::ExtensionSettings[ExtensionSettingsSelection].handle();
+                Settings::ExtensionSettings[ExtensionSettingsSelection].view->Draw(Scene);
             }
             ImGui::EndChild();
         }

@@ -1,12 +1,12 @@
 #pragma once
 
 struct PUBLIC_API_EXPORT EditorExtensionSubsystem
-    : public Core::Subsystem, public EditorAPI::EditorContext
+    : public EditorAPI::EditorContext
 {
     using This = EditorExtensionSubsystem;
-    using Super = Core::Subsystem;
+    using Super = EditorAPI::EditorContext;
     System::ExtensionLibrary<EditorAPI::EditorExtension> Extensions {};
-    Map<String, ClassReference<EditorAPI::EditorFileEditor>> FileEditors {};
+    Map<String, ClassReference<EditorAPI::Editor>> FileEditors {};
     Map<String, ClassReference<EditorAPI::EditorSettings>> Settings {};
 
     virtual ~EditorExtensionSubsystem() {}
@@ -17,8 +17,10 @@ struct PUBLIC_API_EXPORT EditorExtensionSubsystem
     virtual void Load();
     virtual void Unload();
     virtual void ShowExtensions();
-    virtual void RegisterFileEditor(const String & Title, const ClassReference<EditorAPI::EditorFileEditor> & Editor);
-    virtual void RegisterSettings(const String & Title, const ClassReference<EditorAPI::EditorSettings> & Settings);
+    virtual void RegisterFileEditor(const String & Title, const ClassReference<EditorAPI::Editor> & Editor);
+    virtual void RegisterSettings(const String & Title, const ClassReference<UI2::View> & Settings);
+    virtual void RegisterWindow(const String & Title, const ClassReference<UI2::View> & View);
+    virtual void MarkFileDirty(const System::Path & Path, const EditorAPI::Editor & Editor);
 
     void Initialize()
     {

@@ -1,5 +1,15 @@
 #pragma once
 
+inline Map<String, SharedReference<UI2::View>> g_RegisteredWindows;
+
+struct SettingsEntry
+{
+    String title;
+    SharedReference<UI2::View> view;
+};
+
+inline Array<SettingsEntry> g_SettingsEntries;
+
 void ShowRootView(const std::function<void()>& ToolBar, const std::function<void()>& Content);
 void ShowMainMenu();
 void ShowWelcomePage();
@@ -19,22 +29,11 @@ void ShowSaveAsDialog();
 void ProcessDialogs();
 }
 
-struct SettingsEntry
-{
-    std::string title;
-    std::function<void()> handle;
-};
-
 namespace Settings
 {
 
 inline bool DisplaySettings = false;
-void ShowSettings();
-void ShowGeneralSettings();
-void ShowFileBrowserSettings();
-void ShowEnvironment();
-void ShowFileTypes();
-void ShowExtensions();
+void ShowSettings(Graphics::Scene &Scene);
 
 inline std::vector<SettingsEntry> ExtensionSettings;
 

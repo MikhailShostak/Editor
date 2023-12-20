@@ -5,7 +5,6 @@ PrivateIncludes:
   - IconsMaterialDesign.h
   - AppFlow.hpp
   - GraphicsSFML.hpp
-  - ClassGenLibrary.hpp
   - Experimental.hpp
 PrivateDependencies:
   - Name: imgui/1.89.8-docking
@@ -13,5 +12,5 @@ PrivateDependencies:
   - Name: EditorAPI
   - Name: AppFlow
   - Name: GraphicsSFML
-  - Name: ClassGenLibrary
   - Name: experimental
+  - Name: ClassGenLibrary

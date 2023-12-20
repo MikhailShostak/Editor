@@ -4,6 +4,15 @@
 namespace Settings
 {
 
+class GeneralSettingsView : public UI2::View
+{
+public:
+
+void OnDraw(Graphics::Scene &Scene) override
+{
+    ShowGeneralSettings();
+}
+
 void ShowGeneralSettings()
 {
     std::string externalTextEditor = g_Config->Data.General.ExternalTextEditor;
@@ -12,5 +21,7 @@ void ShowGeneralSettings()
         g_Config->Data.General.ExternalTextEditor = externalTextEditor;
     }
 }
+
+};
 
 }

@@ -8,6 +8,15 @@
 namespace Settings
 {
 
+class ExtensionsView : public UI2::View
+{
+public:
+
+void OnDraw(Graphics::Scene &Scene) override
+{
+    ShowExtensions();
+}
+
 void ShowExtension(const std::filesystem::path &path, Extension &extension)
 {
     std::string id = path.filename().generic_string();
@@ -36,7 +45,6 @@ void ShowExtension(const std::filesystem::path &path, Extension &extension)
         boost::process::system(str);
     }
 }
-
 void ShowExtensions()
 {
     Core::FindSubsystem<EditorExtensionSubsystem>()->ShowExtensions();
@@ -93,5 +101,7 @@ void ShowExtensions()
         ImGui::EndPopup();
     }
 }
+
+};
 
 }

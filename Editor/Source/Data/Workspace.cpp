@@ -27,7 +27,7 @@ bool LoadFile(const std::filesystem::path &path)
     //input.close();
     //FileCache[path.generic_string()] = std::move(str);
 
-    for(auto &editor : Editors)
+    for(auto &editor : g_RegisteredEditors)
     {
         editor.second->IndexFile(path);
     }
@@ -79,7 +79,7 @@ void ReindexFiles()
     }
     PendingReindex = false;
 
-    for (auto& [Name, Editor] : Editors)
+    for (auto& [Name, Editor] : g_RegisteredEditors)
     {
         Editor->ResetIndex();
     }

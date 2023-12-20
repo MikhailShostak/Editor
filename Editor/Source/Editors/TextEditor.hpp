@@ -5,7 +5,7 @@
 namespace DefaultExtensions
 {
 
-class TextEditor : public Editor
+class TextEditor : public EditorAPI::Editor
 {
 public:
     void RenderFile(const std::filesystem::path &path) override;

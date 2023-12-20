@@ -1,6 +1,11 @@
 #include <EditorAPI.hpp>
+#include "Views/Views.hpp"
 #include "Subsystems/EditorExtensionSubsystem.hpp"
 #include "Subsystems/Conan/ConanPackage.hpp"
+
+#include "Editors/Editor.hpp"
+
+#include "Data/Workspace.hpp"
 
 using ConanPackageList = Map<String, ConanPackage>;
 
@@ -44,15 +49,21 @@ void EditorExtensionSubsystem::Load()
         }
         
         Extensions.Load(PackageFolder);
-        for (auto &Extension : Extensions.Extensions)
-        {
-            Extension->OnLoad(this);
-        }
+    }
+
+    for (auto &Extension : Extensions.Extensions)
+    {
+        Extension->OnLoad(this);
     }
 }
 
 void EditorExtensionSubsystem::Unload()
 {
+    for (auto &Extension : Extensions.Extensions)
+    {
+        Extension->OnUnload();
+    }
+
     Super::Unload();
 }
 
@@ -115,12 +126,26 @@ void EditorExtensionSubsystem::ShowExtensions()
     }
 }
 
-void EditorExtensionSubsystem::RegisterFileEditor(const String & Title, const ClassReference<EditorAPI::EditorFileEditor> & Editor)
+void EditorExtensionSubsystem::RegisterFileEditor(const String & Title, const ClassReference<EditorAPI::Editor> & Editor)
 {
-
+    g_RegisteredEditors.insert({ Title, Editor->Create() });
 }
 
-void EditorExtensionSubsystem::RegisterSettings(const String & Title, const ClassReference<EditorAPI::EditorSettings> & Settings)
+void EditorExtensionSubsystem::RegisterSettings(const String & Title, const ClassReference<UI2::View> & Settings)
 {
+    g_SettingsEntries.push_back({ Title, Settings->CreateShared() });
+}
 
+#include "Views/Views.hpp"
+
+void EditorExtensionSubsystem::RegisterWindow(const String & Title, const ClassReference<UI2::View> & View)
+{
+    g_RegisteredWindows.insert({ Title, SharedReference<UI2::View>(View->Create().release()) });
+}
+
+void EditorExtensionSubsystem::MarkFileDirty(const System::Path &Path, const EditorAPI::Editor &Editor)
+{
+    //TODO: wtf?
+    //auto it = std::find_if(g_RegisteredEditors.begin(), g_RegisteredEditors.end(), [&](const auto &v){ return v.second.get() == &Editor; });
+    UnsavedFiles[Path.generic_string()] = ConstCast(&Editor);//it->second.get();
 }

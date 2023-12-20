@@ -1093,7 +1093,7 @@ void ProjectEditor::RenderFile(const System::Path &Path)
 
     if (ImGui::Button("Make File Dirty"))
     {
-        MarkFileDirty(Path);
+        //MarkFileDirty(Path);
     }
 
     ImGui::Text("Dependencies");

@@ -1,12 +1,10 @@
 Type: Class
-BaseType: Core.Subsystem
-Interfaces:
-  - EditorAPI.EditorContext
+BaseType: EditorAPI.EditorContext
 Properties:
   - Name: Extensions
     Type: System.ExtensionLibrary<EditorAPI.EditorExtension>
   - Name: FileEditors
-    Type: Map<String, ClassReference<EditorAPI.EditorFileEditor>>
+    Type: Map<String, ClassReference<EditorAPI.Editor>>
   - Name: Settings
     Type: Map<String, ClassReference<EditorAPI.EditorSettings>>
 Functions:
@@ -18,10 +16,22 @@ Functions:
       - Name: Title
         Type: String
       - Name: Editor
-        Type: ClassReference<EditorAPI.EditorFileEditor>
+        Type: ClassReference<EditorAPI.Editor>
   - Name: RegisterSettings
     InputParameters:
       - Name: Title
         Type: String
       - Name: Settings
-        Type: ClassReference<EditorAPI.EditorSettings>
+        Type: ClassReference<UI2.View>
+  - Name: RegisterWindow
+    InputParameters:
+      - Name: Title
+        Type: String
+      - Name: View
+        Type: ClassReference<UI2.View>
+  - Name: MarkFileDirty
+    InputParameters:
+      - Name: Path
+        Type: System.Path
+      - Name: Editor
+        Type: EditorAPI.Editor

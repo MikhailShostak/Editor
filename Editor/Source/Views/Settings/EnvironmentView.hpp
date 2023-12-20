@@ -1,9 +1,11 @@
-#include "Views/Views.hpp"
-
 namespace Settings
 {
 
-void ShowEnvironment()
+class EnvironmentView : public UI2::View
+{
+public:
+
+void OnDraw(Graphics::Scene &Scene) override
 {
     if (ImGui::BeginTable("EnvironmentTable", 2, DefaultTableFlags))
     {
@@ -33,5 +35,7 @@ void ShowEnvironment()
         ImGui::EndTable();
     }
 }
+
+};
 
 }

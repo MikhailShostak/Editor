@@ -4,106 +4,17 @@
 #include "Data/Extensions.hpp"
 #include "Data/Workspace.hpp"
 #include "Editors/BinaryEditor.hpp"
-#include "Editors/ClassGenEditor.hpp"
 #include "Editors/TextEditor.hpp"
+
 #include "Views/Views.hpp"
 
-
-#include <Class.gen.hpp>
+#include "Views/Settings/EnvironmentView.hpp"
+#include "Views/Settings/ExtensionsView.hpp"
+#include "Views/Settings/FileBrowserSettingsView.hpp"
+#include "Views/Settings/FileTypesView.hpp"
+#include "Views/Settings/GeneralSettingsView.hpp"
 
 SharedReference<UI2::Subsystem> UISubsystem;
-
-void OnToolBarUpdate()
-{
-    for (const auto &item : g_ActiveToolBarItems)
-    {
-        auto it = g_ToolBarItems.find(item);
-        if (it != g_ToolBarItems.end())
-        {
-            ImGui::SameLine();
-            it->second();
-        }
-    }
-}
-
-void OnContentUpdate()
-{
-    ImGuiID Workspace = ImGui::GetID("Workspace");
-
-    std::vector<std::filesystem::path> FilesToClose;
-    for (const auto& f : g_Config->Data.File.OpenedFiles)
-    {
-        ImGui::SetNextWindowDockID(Workspace, ImGuiCond_Once);
-        bool IsOpen = true;
-        if (ImGui::Begin(GetFileTitle(f).data(), &IsOpen))
-        {
-            //ImGuiContext& g = *GImGui;
-            //if (ImGui::IsMouseReleased(1) && (g.CurrentWindow->ID == g.HoveredId || ImGui::IsItemHovered()))
-            //{
-            //    ImGui::OpenPopup("FileContextMenu");
-            //}
-            if (ImGui::BeginPopup("FileContextMenu"))
-            {
-                //auto directory = is_directory ? path : path.parent_path();
-                if (ImGui::MenuItem("Save"))
-                {
-                    SaveFile(f);
-                }
-                if (ImGui::MenuItem("Save As..."))
-                {
-                    File::DisplaySaveAsDialog = true;
-                    File::FileToSave = f;
-                }
-                ImGui::Separator();
-                if (ImGui::MenuItem("Close"))
-                {
-                    FilesToClose.push_back(f);
-                }
-                ImGui::Separator();
-                Utils::Menu::ShowDefaultFileOperations(f);
-                ImGui::EndPopup();
-            }
-
-            std::string ext = f.extension().string();
-            std::string EditorName = "TextEditor";
-            auto it1 = ranges::find_if(g_Config->Data.FileTypes, [&](const auto& v)
-            {
-                return v.Extensions == ext;
-            });
-            if (it1 != g_Config->Data.FileTypes.end())
-            {
-                EditorName = it1->Editor;
-            }
-
-            auto it2 = std::find_if(Editors.begin(), Editors.end(), [&](const auto& v)
-            {
-                return v.first == EditorName;
-            });
-            if (it2 == Editors.end())
-            {
-                continue;
-            }
-
-            const std::unique_ptr<Editor>& editor = it2->second;
-            editor->RenderFile(f);
-        }
-
-        if (!IsOpen)
-        {
-            FilesToClose.push_back(f);
-        }
-
-        ImGui::End();
-    }
-    if (!FilesToClose.empty())
-    {
-        CloseFiles(FilesToClose);
-    }
-    if (PendingReindex)
-    {
-        ReindexFiles();
-    }
-}
 
 void LoadIcons()
 {
@@ -238,19 +149,28 @@ void EditorSubsystem::Load()
         }
     };
 
-    Editors.insert({ "BinaryEditor", std::make_unique<DefaultExtensions::BinaryEditor>() });
-    Editors.insert({ "TextEditor", std::make_unique<DefaultExtensions::TextEditor>() });
-    //Editors.insert({ "ClassGenEditor", std::make_unique<DefaultExtensions::ClassGenEditor>() });
-    Editors.insert({ "ProjectEditor", std::make_unique<DefaultExtensions::ProjectEditor>() });
+    g_RegisteredEditors.insert({ "BinaryEditor", std::make_unique<DefaultExtensions::BinaryEditor>() });
+    g_RegisteredEditors.insert({ "TextEditor", std::make_unique<DefaultExtensions::TextEditor>() });
+    g_RegisteredEditors.insert({ "ProjectEditor", std::make_unique<DefaultExtensions::ProjectEditor>() });
 
-    ClassGen::LoadExtensions();
-    g_ExtensionLibrary.Navigate = [](const ClassGen::FileInfo& type)
-    {
-        if (System::IsRegularFile(type.Path))
-        {
-            OpenFile(type.Path, false);
-        }
-    };
+    g_RegisteredWindows.insert({ "PackageWindow", std::make_shared<PackageManagerView>() });
+
+    ArrayUtils::Add(g_SettingsEntries, {
+        { "General", CreateShared<Settings::GeneralSettingsView>() },
+        { "FileBrowser", CreateShared<Settings::FileBrowserSettingsView>() },
+        { "Environment", CreateShared<Settings::EnvironmentView>() },
+        { "Extensions", CreateShared<Settings::ExtensionsView>() },
+        { "File Types", CreateShared<Settings::FileTypesView>() },
+    });
+
+    //ClassGen::LoadExtensions();
+    //g_ExtensionLibrary.Navigate = [](const ClassGen::FileInfo& type)
+    //{
+    //    if (System::IsRegularFile(type.Path))
+    //    {
+    //        OpenFile(type.Path, false);
+    //    }
+    //};
 
     ReloadFiles();
 }
@@ -274,26 +194,5 @@ void EditorSubsystem::RenderScene(Graphics::Window & Window, Graphics::Scene & S
     /*for (auto &[id, request] : g_DrawRequests)
     {
         request(GraphicsContext);
-    }
-
-
-    g_GraphicsContext = &GraphicsContext;
-    g_SceneWindow = this;*/
-
-    UISubsystem->PushUIFont();
-    ShowRootView(&OnToolBarUpdate, &OnContentUpdate);
-
-    File::ProcessDialogs();
-
-    Settings::ShowSettings();
-    View::ShowFileBrowser();
-    View::ShowConsole();
-    Tools::ShowImportWindow();
-    if (Debug::DisplayImGuiDemo)
-    {
-        ImGui::ShowDemoWindow();
-    }
-    Debug::ShowDebugWindow();
-    UISubsystem->PopFont();
-    //g_GraphicsContext = nullptr;
+    }*/
 }
