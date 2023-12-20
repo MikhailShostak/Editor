@@ -6,7 +6,6 @@
 #include "Data/Configs/FileType.hpp"
 #include "Data/Configs/GeneralConfig.hpp"
 #include "Data/EditorConfig.hpp"
-#include "Data/EditorConfigData.hpp"
 
 #include "Editors/Project/EditablePackages/ProjectEditablePackage.hpp"
 #include "Editors/Project/EditablePackages/ProjectEditablePackageConfig.hpp"
@@ -23,4 +22,4 @@
 
 inline System::Path g_UserFolder = "W:/.Editor";
 inline System::Path g_BuildToolsFolder = "W:/Projects/BuildTools";//g_UserFolder / "BuildTools";
-inline SharedReference<System::ConfigFile<EditorConfig>> g_Config;
+inline System::ConfigFile<EditorConfig> *g_Config = nullptr;

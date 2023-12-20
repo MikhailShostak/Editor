@@ -29,4 +29,4 @@ Properties:
   - Attributes:
       - Serialize
     Name: Config
-    Type: SharedReference<System.ConfigFile<EditorConfig>>
+    Type: System.ConfigFile<EditorConfig>

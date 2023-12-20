@@ -167,7 +167,7 @@ void EditorSubsystem::Load()
 
     UISubsystem = Core::FindSubsystem<UI2::Subsystem>();
 
-    g_Config = Config;
+    g_Config = &Config;
 
     //System::CommandLineTool git(g_UserFolder / "Git/bin/git");
     //if (!System::IsExists(g_BuildToolsFolder))
@@ -176,7 +176,7 @@ void EditorSubsystem::Load()
     //    System::CommandLineTool(g_BuildToolsFolder / "Setup").Run();
     //}
 
-    if (Config->Load())
+    if (Config.Load())
     {
         ReloadExtensions();
         if (!g_Config->Data.File.OpenedFolders.empty())
@@ -257,7 +257,7 @@ void EditorSubsystem::Load()
 
 void EditorSubsystem::Unload()
 {
-    Config->Save();
+    Config.Save();
 
     Super::Unload();
 }

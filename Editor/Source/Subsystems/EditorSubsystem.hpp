@@ -5,7 +5,7 @@ struct PUBLIC_API_EXPORT EditorSubsystem
 {
     using This = EditorSubsystem;
     using Super = Graphics::RenderingSubsystem;
-    SharedReference<System::ConfigFile<EditorConfig>> Config {};
+    System::ConfigFile<EditorConfig> Config {};
 
     virtual ~EditorSubsystem() {}
     template<typename T>

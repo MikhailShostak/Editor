@@ -1,4 +1,0 @@
-Type: Asset
-BaseType: System.ConfigFile<EditorConfig>
-Values:
-  Path: config.yaml

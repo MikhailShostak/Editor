@@ -25,4 +25,4 @@
 - Type: EditorSubsystem
   Values:
     Config:
-      Type: EditorConfigData
+      Path: Config.yaml
